@@ -8,11 +8,13 @@ import "./App.css";
 import SigninPage from "./pages/sign-in";
 import SignupPage from "./pages/sign-up";
 import Dashboard from "./pages/dashboard";
+import HomePage from "./pages/homepage";
 
 function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/sign-in" element={<SigninPage />} />
         <Route path="/sign-up" element={<SignupPage />} />
