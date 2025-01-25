@@ -41,3 +41,76 @@ export const useCreateTheatre = () => {
   });
   return mutation;
 };
+
+export const useCreateTheatreHall = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async function ({ theatreId, number, seatingCapacity }) {
+      const { data } = await apiInstance.post(`/admin/theatres/halls`, {
+        number,
+        seatingCapacity,
+        theatreId,
+      });
+
+      return data;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["theatre-halls"] });
+    },
+  });
+  return mutation;
+};
+
+export const useGetTheatreHall = (theatreId) => {
+  const query = useQuery({
+    queryKey: ["theatre-halls", theatreId],
+    enabled: !!theatreId,
+    queryFn: async function () {
+      const { data } = await apiInstance.get(
+        `/admin/theatres/${theatreId}/halls`
+      );
+
+      return data.data;
+    },
+  });
+  return query;
+};
+
+export const useGetShowsByMovieId = (movieId) => {
+  const query = useQuery({
+    queryKey: ["shows", movieId],
+    enabled: !!movieId,
+    queryFn: async function () {
+      const { data } = await apiInstance.get(`/admin/shows/${movieId}`);
+
+      return data.data;
+    },
+  });
+  return query;
+};
+
+export const useCreateShow = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async function ({
+      movieId,
+      theatreHallId,
+      startTimestamp,
+      endTimestamp,
+      price,
+    }) {
+      const { data } = await apiInstance.post("/admin/shows", {
+        movieId,
+        theatreHallId,
+        startTimestamp,
+        endTimestamp,
+        price,
+      });
+      return data;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["shows"] });
+    },
+  });
+  return mutation;
+};
