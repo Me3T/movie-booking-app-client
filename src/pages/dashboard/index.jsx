@@ -3,6 +3,7 @@ import { useLoggedInUser } from "../../hooks/auth.hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminDashboard from "./admin-dashboard";
+import UserDashboard from "./user-dashboard";
 
 const Dashboard = () => {
   const { data: user, isLoading } = useLoggedInUser();
@@ -15,7 +16,12 @@ const Dashboard = () => {
 
   if (isLoading) return <h1>Loading...</h1>;
 
-  return <>{user.role === "admin" && <AdminDashboard />}</>;
+  return (
+    <>
+      {user.role === "admin" && <AdminDashboard />}
+      {user.role === "user" && <UserDashboard />}
+    </>
+  );
 };
 
 export default Dashboard;
