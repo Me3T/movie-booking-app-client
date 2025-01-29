@@ -50,9 +50,7 @@ const CreateMovieForm = () => {
       setLanguage("");
       setImageURL("");
       setDurationInMinutes("");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleTitle = (e) => {

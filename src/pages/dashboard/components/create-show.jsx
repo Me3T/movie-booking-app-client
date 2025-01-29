@@ -133,15 +133,15 @@ function CreateShowForm({ movieId, setMovieId }) {
             onChange={(e) => setStartTime(e.target.value)}
             fullWidth
             type="datetime-local"
-            label="Start Time"
+            label=""
             required
           />
-          <TextField
+          <TextField 
             value={endTime}
             onChange={(e) => setEndTime(e.target.value)}
             fullWidth
             type="datetime-local"
-            label="End Time"
+            label=""
             required
           />
         </div>

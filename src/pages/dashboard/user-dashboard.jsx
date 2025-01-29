@@ -14,20 +14,50 @@ import "./user.css";
 import moment from "moment";
 import { useMemo } from "react";
 
+import { useRazorpay } from "react-razorpay";
+import { apiInstance } from "../../api";
+
 const UserDashboard = () => {
+  const { Razorpay } = useRazorpay();
+
   const { data: user } = useLoggedInUser();
   const { data: movies, isLoading } = useGetAllMovies();
   const [selectedMovieId, setSelectedMovieId] = useState(null);
-  const [selctedShowId, setSelectedShowId] = useState(null);
+  const [selectedShowId, setSelectedShowId] = useState(null);
   const [selectedSeat, setSelectedSeat] = useState(null);
 
   const { data: shows } = useGetShowsByMovieId(selectedMovieId);
 
   const showObj = useMemo(() => {
-    if (!shows || !selctedShowId) return null;
-    const show = shows?.find((e) => e._id === selctedShowId);
+    if (!shows || !selectedShowId) return null;
+    const show = shows?.find((e) => e._id === selectedShowId);
     return show;
-  }, [selctedShowId, shows]);
+  }, [selectedShowId, shows]);
+
+  async function handleCreateBooking() {
+    const { data } = await apiInstance.post(`/booking/create`, {
+      showId: selectedShowId,
+      seatNumber: selectedSeat,
+    });
+    const order = data.order;
+
+    const options = {
+      key: "rzp_test_iDFdidVxSxO08k",
+      amount: order.amount,
+      currency: order.currency,
+      name: "Book My Show",
+      order_id: order.id,
+      handler: async function (response) {
+        await apiInstance.post(`/booking/verify-payment`, {
+          paymentId: response.razorpay_payment_id,
+          orderId: response.razorpay_order_id,
+          signature: response.razorpay_signature,
+        });
+      },
+    };
+    const razorpayInstance = new Razorpay(options);
+    razorpayInstance.open();
+  }
 
   if (isLoading) return <h3>Loading...</h3>;
 
@@ -125,7 +155,11 @@ const UserDashboard = () => {
             Clear
           </Button>
         )}
-        {selectedSeat && <Button variant="contained">Book Now</Button>}
+        {selectedSeat && (
+          <Button onClick={handleCreateBooking} variant="contained">
+            Book Now
+          </Button>
+        )}
       </div>
     </div>
   );

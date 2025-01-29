@@ -8,7 +8,6 @@ import UserDashboard from "./user-dashboard";
 const Dashboard = () => {
   const { data: user, isLoading } = useLoggedInUser();
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     if (!isLoading && !user) navigate("/sign-in");

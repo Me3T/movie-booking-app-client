@@ -22,7 +22,6 @@ const SignupPage = () => {
   useEffect(() => {
     if (loggedInUser) navigate("/dashboard");
   }, [loggedInUser, navigate]);
-  console.log("loggedInUser", loggedInUser);
 
   const isConfirmPasswordMatch = useMemo(
     () => password === confirmPassword || confirmPassword === "",
