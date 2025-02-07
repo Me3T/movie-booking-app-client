@@ -42,7 +42,7 @@ const UserDashboard = () => {
     const order = data.order;
 
     const options = {
-      key: "rzp_test_iDFdidVxSxO08k",
+      key: process.env.RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: order.currency,
       name: "Book My Show",
