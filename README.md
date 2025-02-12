@@ -127,8 +127,3 @@ To contribute:
 6. **Submit a Pull Request** 🚀
 
 ---
-
-### 👨‍💻 Developer Contact
-
-For queries or suggestions, feel free to reach out!  
-GitHub: [Me3T](https://github.com/Me3T)
