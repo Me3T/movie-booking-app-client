@@ -7,7 +7,7 @@ const HomePage = () => {
   useEffect(() => {
     navigate("/sign-in");
   }, [navigate]);
-  return <>Loading...</>;
+  return <>LOADING...</>;
 };
 
 export default HomePage;
