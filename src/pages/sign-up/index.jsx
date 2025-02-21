@@ -79,7 +79,7 @@ const SignupPage = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               error={!isConfirmPasswordMatch}
               helperText={
-                !isConfirmPasswordMatch ? "Password does not match" : undefined
+                !isConfirmPasswordMatch ? "Password Does not match" : undefined
               }
               fullWidth
               label="Confirm Password"
